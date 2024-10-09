@@ -9,7 +9,7 @@ class AuthApi {
 
   AuthApi(this.client);
 
-  Future<Map<String, dynamic>> login(
+  Future<Map<String, dynamic>> authenticate(
       String displayNameApp, String displayNameUser, String email) async {
     http.Response response = await client.post(
       'auth/',
@@ -34,7 +34,7 @@ class AuthApi {
     }
   }
 
-  Future<Map<String, dynamic>> authenticate(String email, String code) async {
+  Future<Map<String, dynamic>> authorize(String email, String code) async {
     http.Response response = await client.put(
       'auth/',
       {

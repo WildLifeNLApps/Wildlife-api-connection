@@ -11,8 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+The package can be used by the various WildlifeNL apps in order to make calls to the API. This way there will be less duplicate code shared across the various apps.
 
 ## Features
 
@@ -27,13 +26,14 @@ start using the package.
 
 TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder.
+When using this app pass an instance of the ApiClient class from this package to the API class which you want to use and then simply call the functions defined within the API class.
 
 ```dart
-const like = 'sample';
+const apiClient = ApiClient("baseUrl")
+const authApi = AuthApi(apiClient)
 ```
 
 ## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+The package depends on the following other packages:
+http: ^1.2.2
+shared_preferences: ^2.3.2

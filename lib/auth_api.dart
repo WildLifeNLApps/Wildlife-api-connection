@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:wildlife_api_connection/api_client.dart';
+import 'package:wildlife_api_connection/models/user.dart';
 
 class AuthApi {
   final ApiClient client;
@@ -10,13 +11,12 @@ class AuthApi {
   AuthApi(this.client);
 
   Future<Map<String, dynamic>> authenticate(
-      String displayNameApp, String displayNameUser, String email) async {
+      String displayNameApp, String email) async {
     http.Response response = await client.post(
       'auth/',
       {
         "displayNameApp": displayNameApp,
-        "displayNameUser": displayNameUser,
-        "email": email
+        "email": email,
       },
       authenticated: false,
     );
@@ -34,7 +34,7 @@ class AuthApi {
     }
   }
 
-  Future<Map<String, dynamic>> authorize(String email, String code) async {
+  Future<User> authorize(String email, String code) async {
     http.Response response = await client.put(
       'auth/',
       {
@@ -51,7 +51,8 @@ class AuthApi {
     } catch (_) {}
 
     if (response.statusCode == HttpStatus.ok) {
-      return json!;
+      User user = User.fromJson(json!);
+      return user;
     } else {
       throw Exception(json!["detail"]);
     }

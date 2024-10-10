@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 import 'package:wildlife_api_connection/auth_api.dart';
+import 'package:wildlife_api_connection/models/user.dart';
 
 import 'mocks/api_mocks.mocks.dart';
 
@@ -21,7 +22,6 @@ void main() {
       // Arrange
       const email = 'test@example.com';
       const displayNameApp = 'Wildlife';
-      const displayNameUser = 'Wildlife User';
 
       const responseJson = {
         'detail': "The authentication code has been sent to: $email"
@@ -32,7 +32,6 @@ void main() {
         'auth/',
         {
           'displayNameApp': displayNameApp,
-          'displayNameUser': displayNameUser,
           'email': email,
         },
         authenticated: false,
@@ -43,7 +42,6 @@ void main() {
       // Act
       final result = await authApi.authenticate(
         displayNameApp,
-        displayNameUser,
         email,
       );
 
@@ -55,7 +53,7 @@ void main() {
       // Arrange
       const email = 'test@example.com';
       const displayNameApp = 'Wildlife';
-      const displayNameUser = 'Wildlife User';
+
       final responseJson = {};
       final response = http.Response(
           jsonEncode(responseJson), HttpStatus.internalServerError);
@@ -64,7 +62,6 @@ void main() {
         'auth/',
         {
           'displayNameApp': displayNameApp,
-          'displayNameUser': displayNameUser,
           'email': email,
         },
         authenticated: false,
@@ -74,7 +71,6 @@ void main() {
       expect(
         () async => await authApi.authenticate(
           displayNameApp,
-          displayNameUser,
           email,
         ),
         throwsA(isA<Exception>()),
@@ -112,8 +108,9 @@ void main() {
       );
 
       // Assert
-      expect(result, isA<Map<String, dynamic>>());
-      expect(result['email'], email);
+      expect(result, isA<User>());
+      expect(result.id, responseJson['userID']);
+      expect(result.email, email);
     });
 
     test('failed authorize', () async {

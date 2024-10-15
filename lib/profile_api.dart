@@ -11,9 +11,8 @@ class ProfileApi {
   ProfileApi(this.client);
 
   Future<User> getMyProfile() async {
-    http.Response response = await client.post(
+    http.Response response = await client.get(
       'profile/me/',
-      {},
       authenticated: true,
     );
 

@@ -30,9 +30,8 @@ void main() {
       };
       final response = http.Response(jsonEncode(responseJson), HttpStatus.ok);
 
-      when(mockApiClient.post(
+      when(mockApiClient.get(
         'profile/me/',
-        {},
         authenticated: true,
       )).thenAnswer((_) async {
         return response;
@@ -59,9 +58,8 @@ void main() {
       final response =
           http.Response(jsonEncode(responseJson), HttpStatus.unauthorized);
 
-      when(mockApiClient.post(
+      when(mockApiClient.get(
         'profile/me/',
-        {},
         authenticated: true,
       )).thenAnswer((_) async {
         return response;

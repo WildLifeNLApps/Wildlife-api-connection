@@ -4,12 +4,13 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:wildlife_api_connection/models/user.dart';
 import 'package:wildlife_api_connection/profile_api.dart';
 
 import 'mocks/api_mocks.mocks.dart';
 
 void main() {
-  group('GroupApi', () {
+  group('ProfileAPI', () {
     late MockApiClient mockApiClient;
     late ProfileApi profileApi;
 
@@ -21,12 +22,10 @@ void main() {
     test('profile get returns json when given token', () async {
       // Arrange
       const id = 'd43efd6f-e8ad-4c8b-b37e-b72dd6263e3f';
-      const name = 'test';
       const email = 'test@example.com';
 
       const responseJson = {
         "ID": id,
-        "name": name,
         "email": email,
       };
       final response = http.Response(jsonEncode(responseJson), HttpStatus.ok);
@@ -43,21 +42,18 @@ void main() {
       final result = await profileApi.getMyProfile();
 
       // Assert
-      expect(result, isA<Map<String, dynamic>>());
-      expect(result['ID'], id);
-      expect(result['name'], name);
-      expect(result['email'], email);
+      expect(result, isA<User>());
+      expect(result.id, id);
+      expect(result.email, email);
     });
 
     test('profile get throws exception when given invalid token', () async {
       // Arrange
       const id = 'd43efd6f-e8ad-4c8b-b37e-b72dd6263e3f';
-      const name = 'test';
       const email = 'test@example.com';
 
       const responseJson = {
         "ID": id,
-        "name": name,
         "email": email,
       };
       final response =

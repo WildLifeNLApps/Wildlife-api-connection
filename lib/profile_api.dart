@@ -3,13 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:wildlife_api_connection/api_client.dart';
+import 'package:wildlife_api_connection/models/user.dart';
 
 class ProfileApi {
   final ApiClient client;
 
   ProfileApi(this.client);
 
-  Future<Map<String, dynamic>> getMyProfile() async {
+  Future<User> getMyProfile() async {
     http.Response response = await client.post(
       'profile/me/',
       {},
@@ -23,7 +24,8 @@ class ProfileApi {
     } catch (_) {}
 
     if (response.statusCode == HttpStatus.ok) {
-      return json ?? {};
+      User user = User.fromJson(json!);
+      return user;
     } else {
       throw Exception(json ?? "Failed to get your profile");
     }

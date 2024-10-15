@@ -27,4 +27,21 @@ class SpeciesApi {
       throw Exception(json ?? "Failed to get all species");
     }
   }
+
+  Future<Species> getSpecies(String id) async {
+    http.Response response = await client.get(
+      'species/$id/',
+      authenticated: true,
+    );
+
+    Map<String, dynamic>? json;
+
+    if (response.statusCode == HttpStatus.ok) {
+      json = jsonDecode(response.body);
+      Species species = Species.fromJson(json!);
+      return species;
+    } else {
+      throw Exception(json ?? "Failed to get species");
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wildlife_api_connection/api_client.dart';
 import 'package:wildlife_api_connection/models/user.dart';
 
@@ -51,7 +52,9 @@ class AuthApi {
     } catch (_) {}
 
     if (response.statusCode == HttpStatus.ok) {
-      User user = User.fromJson(json!);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('bearer_token', json!["token"]);
+      User user = User.fromJson(json);
       return user;
     } else {
       throw Exception(json!["detail"]);

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wildlife_api_connection/auth_api.dart';
 import 'package:wildlife_api_connection/models/user.dart';
 
@@ -89,6 +90,8 @@ void main() {
         "userID": "2c3821b8-1cdb-4b77-bcd8-a1da701e46aa"
       };
       final response = http.Response(jsonEncode(responseJson), HttpStatus.ok);
+
+      SharedPreferences.setMockInitialValues({});
 
       when(mockApiClient.put(
         'auth/',

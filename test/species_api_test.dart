@@ -48,8 +48,7 @@ void main() {
       // Assert
       expect(result, isA<List<Species>>());
       expect(result[0].name, name);
-      expect(result[0].commonNameNL, commonNameNL);
-      expect(result[0].commonNameEN, commonNameEN);
+      expect(result[0].commonName, commonNameNL);
     });
 
     test('get all species throws exception when api returns error', () async {
@@ -106,8 +105,7 @@ void main() {
       expect(result, isA<Species>());
       expect(result.id, id);
       expect(result.name, name);
-      expect(result.commonNameNL, commonNameNL);
-      expect(result.commonNameEN, commonNameEN);
+      expect(result.commonName, commonNameNL);
     });
 
     test('getSpecies throws exception when api returns error', () async {

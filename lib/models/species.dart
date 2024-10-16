@@ -1,22 +1,19 @@
 class Species {
   final String id;
   final String name;
-  final String commonNameNL;
-  final String commonNameEN;
+  final String commonName;
 
   Species({
     required this.id,
     required this.name,
-    required this.commonNameNL,
-    required this.commonNameEN,
+    required this.commonName,
   });
 
   factory Species.fromJson(Map<String, dynamic> json) {
     return Species(
       id: json['ID'],
       name: json['name'],
-      commonNameNL: json['commonNameNL'],
-      commonNameEN: json['commonNameEN'],
+      commonName: json['commonNameNL'],
     );
   }
 
@@ -24,8 +21,7 @@ class Species {
     return {
       'id': id,
       'name': name,
-      'commonNameNL': commonNameNL,
-      'commonNameEN': commonNameEN,
+      'commonName': commonName,
     };
   }
 }

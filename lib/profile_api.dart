@@ -29,4 +29,27 @@ class ProfileApi {
       throw Exception(json ?? "Failed to get your profile");
     }
   }
+
+  Future<User> updateProfile(String name) async {
+    http.Response response = await client.put(
+      'profile/me/',
+      {
+        'name': name,
+      },
+      authenticated: true,
+    );
+
+    Map<String, dynamic>? json;
+    try {
+      json = jsonDecode(response.body);
+      debugPrint('Profile api: $json');
+    } catch (_) {}
+
+    if (response.statusCode == HttpStatus.ok) {
+      User user = User.fromJson(json!);
+      return user;
+    } else {
+      throw Exception(json ?? "Failed to update your profile");
+    }
+  }
 }
